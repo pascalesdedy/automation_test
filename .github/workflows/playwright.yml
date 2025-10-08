@@ -20,7 +20,8 @@ jobs:
     - name: Run Playwright tests
       run: npx playwright test
       env:
-        BASE_URL: ${{ secrets.BASE_URL }}
+        NODE_ENV: DEV
+        BASE_URL: "https://www.cermati.com" 
     - uses: actions/upload-artifact@v4
       if: ${{ !cancelled() }}
       with:
