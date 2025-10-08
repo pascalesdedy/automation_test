@@ -1,13 +1,16 @@
 import { test, expect } from '@playwright/test';
 import { JoinPage } from '../page_objects/join_page';
+import { VerifyOtpPage } from '../page_objects/verify_otp_page';
 
 test.describe('Test halaman join cermati', () => {
   let joinPage: JoinPage;
+  let verifyOtpPage: VerifyOtpPage;
 
   test.beforeEach(async ({ page }) => {
     joinPage = new JoinPage(page);
     await joinPage.navigateTo('/app/gabung');
   });
+
 // positive case
   test('Positive case: should display correct page title', async ({ page }) => {
     await expect(page).toHaveTitle(/Daftar/);
@@ -35,6 +38,16 @@ test.describe('Test halaman join cermati', () => {
   test('Positive case: Kebijakan privasi Link is redirect to correct page', async ({ page }) => {
     await joinPage.kbLink.click();
     await expect(page).toHaveTitle(/Kebijakan Privasi/);
+  })
+  test('Positive case: should be able to click daftar button', async ({ page }) => {
+    verifyOtpPage = new VerifyOtpPage(page);
+    await joinPage.textBoxNoHp.fill('085232229774');
+    await joinPage.textBoxEmail.fill('test.aja01@yopmail.com');
+    await joinPage.textBoxNamaDepan.fill('John');
+    await joinPage.textBoxNamaBelakang.fill('Smith');
+    await joinPage.buttonDaftar.click();
+    await expect(verifyOtpPage.headingVerifyOtp).toBeVisible();
+    await expect(verifyOtpPage.textNoHp).toBeVisible();
   })
 
 // negative case
