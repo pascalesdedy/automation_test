@@ -1,4 +1,3 @@
-
 import { Page } from '@playwright/test';
 
 export class BasePage {
@@ -14,9 +13,5 @@ export class BasePage {
     }
     async takeScreenshot(testTitle: string) {
       await this.page.screenshot({ path: `screenshots/${testTitle}.jpg` });
-    }
-    async countRows() {
-        const rows = this.page.getByRole('row');
-        return await rows.count();
     }
   }
