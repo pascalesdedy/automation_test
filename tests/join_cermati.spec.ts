@@ -46,6 +46,7 @@ test.describe('Test halaman join cermati', () => {
     const hasCaptcha = await captcha.count() > 0;
     if (hasCaptcha) {
       test.skip(true, 'Skipped karena ada recaptcha');
+      return;
     }
     await joinPage.textBoxNoHp.fill('085232229774');
     await joinPage.textBoxEmail.fill('test.aja01@yopmail.com');
