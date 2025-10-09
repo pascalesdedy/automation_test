@@ -41,6 +41,12 @@ test.describe('Test halaman join cermati', () => {
   })
   test('Positive case: should be able to click daftar button', async ({ page }) => {
     verifyOtpPage = new VerifyOtpPage(page);
+
+    const captcha = page.locator('iframe[src*="recaptcha/api2/anchor"]');
+    const hasCaptcha = await captcha.count() > 0;
+    if (hasCaptcha) {
+      test.skip(true, 'Skipped karena ada recaptcha');
+    }
     await joinPage.textBoxNoHp.fill('085232229774');
     await joinPage.textBoxEmail.fill('test.aja01@yopmail.com');
     await joinPage.textBoxNamaDepan.fill('John');
